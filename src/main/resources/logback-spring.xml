@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+  
+  <property name="LOG_PATTERN" value="%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %p %m%n" />
+  <property name="LOG_PATTERN_CONSOLE" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
+  <property name="LOG_PATH" value="/logs_Nuvu/"/>
+  <property name="LOG_FILE" value="tecnica"/>
+  <property name="LOG_DATE_PATTERN" value="%d{yyyy-MM-dd}"/>
+  
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+  
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <encoder>
+      <pattern>${LOG_PATTERN}</pattern>
+    </encoder>
+    <file>${LOG_PATH}/${LOG_FILE}.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_PATH}/${LOG_FILE}.${LOG_DATE_PATTERN}.log</fileNamePattern>
+      <totalSizeCap>3GB</totalSizeCap>
+    </rollingPolicy>
+  </appender>
+  
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>${LOG_PATTERN_CONSOLE}</pattern>
+    </encoder>
+  </appender>
+  
+  <root level="info">
+    <appender-ref ref="STDOUT"/>
+  </root>
+  
+   <logger name="com.amerikati.api.tecnica" level="DEBUG">
+     <appender-ref ref="FILE" />
+  </logger>
+    
+</configuration>
