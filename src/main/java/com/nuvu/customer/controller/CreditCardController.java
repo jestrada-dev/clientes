@@ -72,6 +72,43 @@ public class CreditCardController {
 	}
 	
 	/**
+	 * List credit cards By Customer id
+	 * 
+	 * @return
+	 */
+	@ApiOperation(value = "List credit cards by Customer id.", response = ResponseEntity.class)
+	@GetMapping("/customer-id/{customerId}")
+	public ResponseEntity<GeneralResponse<List<CreditCardEntity>>> get(@PathVariable Integer customerId) {
+		
+		GeneralResponse<List<CreditCardEntity>> response = new GeneralResponse<>();
+		HttpStatus status = null;
+		List<CreditCardEntity> data = null; 
+
+		try {
+
+			data = creditCardService.getByCustomerId(customerId);
+			String msg = "It found " + data.size() + " credit cards.";
+			
+			response.setMessage(msg);
+			response.setSuccess(true);
+			response.setData(data);
+			status = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			
+			String msg = "Something has failed. Please contact suuport.";
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			response.setMessage(msg);
+			response.setSuccess(false);
+			
+			String log = "End point GET/credit-cards/customer has failed. " + e.getLocalizedMessage();			
+			logger.error(log);
+		}
+
+		return new ResponseEntity<>(response, status);
+	}
+	
+	/**
 	 * Add credit card.
 	 * 
 	 * @param creditCard

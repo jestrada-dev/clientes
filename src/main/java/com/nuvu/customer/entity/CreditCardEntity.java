@@ -6,6 +6,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "CREDIT_CARDS")
 public class CreditCardEntity {
@@ -15,8 +17,10 @@ public class CreditCardEntity {
 	private String expire;
 	private String printName;
 	private String cvc;
-    @ManyToOne
+
     @JoinColumn(name = "id")
+    @ManyToOne
+    @JsonBackReference
 	private CustomerEntity customer;
 
 	public String getNumber() {

@@ -8,5 +8,4 @@ import com.nuvu.customer.entity.CreditCardEntity;
 @Repository
 public interface CreditCardRepository extends JpaRepository<CreditCardEntity, String> {
 	
-
 }
