@@ -5,7 +5,7 @@
   <property name="LOG_PATTERN" value="%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %p %m%n" />
   <property name="LOG_PATTERN_CONSOLE" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
   <property name="LOG_PATH" value="/logs_Nuvu/"/>
-  <property name="LOG_FILE" value="tecnica"/>
+  <property name="LOG_FILE" value="customer"/>
   <property name="LOG_DATE_PATTERN" value="%d{yyyy-MM-dd}"/>
   
   <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
@@ -31,7 +31,7 @@
     <appender-ref ref="STDOUT"/>
   </root>
   
-   <logger name="com.amerikati.api.tecnica" level="DEBUG">
+   <logger name="com.nuvu.customer" level="DEBUG">
      <appender-ref ref="FILE" />
   </logger>
     
