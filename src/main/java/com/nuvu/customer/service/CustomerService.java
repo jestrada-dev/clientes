@@ -8,8 +8,8 @@ public interface CustomerService {
 
 	public List<CustomerEntity> get() throws Exception;
 	
-	public List<CustomerEntity> save(List<CustomerEntity> customers) throws Exception;
+	public CustomerEntity save(CustomerEntity customer) throws Exception;
 	
-	public boolean delete(CustomerEntity customer) throws Exception;
+	public boolean delete(Integer id) throws Exception;
 		
 }

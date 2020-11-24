@@ -1,10 +1,11 @@
 package com.nuvu.customer.entity;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -14,25 +15,28 @@ import javax.persistence.Table;
 public class CustomerEntity {
 
 	@Id
-	private BigDecimal id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;
 	private String docType;
 	@Column(unique = true)
 	private String docId;
 	private String lastName;
 	private String firstName;
+	private String email;
+	private String phone;
+	private String age;
 	
     @OneToMany(mappedBy = "customer")
 	private List<CreditCardEntity> creditCards;
 	
-	private String email;
-	
 	public CustomerEntity() {
 	}
 
-	public BigDecimal getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(BigDecimal id) {
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -76,6 +80,22 @@ public class CustomerEntity {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
 	}
 	
 	

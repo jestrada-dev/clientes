@@ -21,14 +21,14 @@ public class CreditCardServiceImpl implements CreditCardService {
 	}
 
 	@Override
-	public List<CreditCardEntity> save(List<CreditCardEntity> creditCards) throws Exception {
-		return creditCardRepository.saveAll(creditCards);
+	public CreditCardEntity save(CreditCardEntity creditCard) throws Exception {
+		return creditCardRepository.save(creditCard);
 	}
 
 	@Override
-	public boolean delete(CreditCardEntity creditCard) throws Exception {
-		creditCardRepository.delete(creditCard);
-		return false;
+	public boolean delete(String number) throws Exception {
+		creditCardRepository.deleteById(number);
+		return true;
 	}
 
 

@@ -9,9 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,12 +44,12 @@ public class UserController {
 	private JwtUtils jwtUtils;
 
 	/**
-	 * Login with user and password.
+	 * Login with userName and password.
 	 * 
 	 * @param user
 	 * @return
 	 */
-	@ApiOperation(value = "Login width user and password", response = ResponseEntity.class)
+	@ApiOperation(value = "Login width userName and password", response = ResponseEntity.class)
 	@PostMapping("/auth")
 	public ResponseEntity<GeneralResponse<UserEntity>> login(@RequestBody UserEntity user) {
 		
@@ -69,6 +71,16 @@ public class UserController {
 			response.setData(user);
 			status = HttpStatus.OK;
 			
+		} catch (AuthenticationException e) {
+			
+			String msg = "Usuario o clave incorrectos.";
+			status = HttpStatus.FORBIDDEN;
+			response.setMessage(msg);
+			response.setSuccess(false);
+			
+			String log = msg + e.getLocalizedMessage();			
+			logger.error(log);		
+		
 		} catch (Exception e) {
 			
 			String msg = "Something has failed. Please contact suuport.";
@@ -83,29 +95,6 @@ public class UserController {
 		return new ResponseEntity<>(response, status);
 	}
 
-	
-
-	
-//	private String getJwtToken(String user) {
-//		String secretKey = "mySecretKey";
-//		List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-//				.commaSeparatedStringToAuthorityList("ROLE_USER");
-//		
-//		String token = Jwts
-//				.builder()
-//				.setId("softtekJWT")
-//				.setSubject(user)
-//				.claim("authorities",
-//						grantedAuthorities.stream()
-//								.map(GrantedAuthority::getAuthority)
-//								.collect(Collectors.toList()))
-//				.setIssuedAt(new Date(System.currentTimeMillis()))
-//				.setExpiration(new Date(System.currentTimeMillis() + 600000))
-//				.signWith(SignatureAlgorithm.HS512,
-//						secretKey.getBytes()).compact();
-//
-//		return "Bearer " + token;
-//	}
 
 	/**
 	 * List users.
@@ -224,20 +213,20 @@ public class UserController {
 	 * @return @List<UserVO>
 	 */
 	@ApiOperation(value = "Delete user.", response = ResponseEntity.class)
-	@DeleteMapping
-	public ResponseEntity<GeneralResponse<UserEntity>> delete(@RequestBody UserEntity user) {
+	@DeleteMapping("/{userName}")
+	public ResponseEntity<GeneralResponse<String>> delete(@PathVariable String userName) {
 		
-		GeneralResponse<UserEntity> response = new GeneralResponse<>();
+		GeneralResponse<String> response = new GeneralResponse<>();
 		HttpStatus status = null;
 
 		try {
 
-			userService.delete(user);
-			String msg = "It delete by user " + user.getUserName() + ".";
+			userService.delete(userName);
+			String msg = "It delete by user " + userName + ".";
 			
 			response.setMessage(msg);
 			response.setSuccess(true);
-			response.setData(user);
+			response.setData(userName);
 			status = HttpStatus.OK;
 			
 		} catch (Exception e) {

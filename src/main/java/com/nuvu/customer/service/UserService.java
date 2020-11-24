@@ -10,6 +10,6 @@ public interface UserService {
 	
 	public List<UserEntity> save(List<UserEntity> users) throws Exception;
 	
-	public boolean delete(UserEntity user) throws Exception;
+	public boolean delete(String userName) throws Exception;
 		
 }

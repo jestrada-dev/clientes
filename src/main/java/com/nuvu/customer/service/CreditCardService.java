@@ -8,8 +8,8 @@ public interface CreditCardService {
 
 	public List<CreditCardEntity> get() throws Exception;
 	
-	public List<CreditCardEntity> save(List<CreditCardEntity> creditCard) throws Exception;
+	public CreditCardEntity save(CreditCardEntity creditCard) throws Exception;
 	
-	public boolean delete(CreditCardEntity creditCard) throws Exception;
+	public boolean delete(String number) throws Exception;
 		
 }

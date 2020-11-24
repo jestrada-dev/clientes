@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -71,21 +72,21 @@ public class CustomerController {
 	
 	/**
 	 * 
-	 * @param customers
+	 * @param customer
 	 * @return
 	 */
-	@ApiOperation(value = "Add customers.", response = ResponseEntity.class)
+	@ApiOperation(value = "Add customer.", response = ResponseEntity.class)
 	@PostMapping
-	public ResponseEntity<GeneralResponse<List<CustomerEntity>>> save(@RequestBody List<CustomerEntity> customers) {
+	public ResponseEntity<GeneralResponse<CustomerEntity>> save(@RequestBody CustomerEntity customer) {
 		
-		GeneralResponse<List<CustomerEntity>> response = new GeneralResponse<>();
+		GeneralResponse<CustomerEntity> response = new GeneralResponse<>();
 		HttpStatus status = null;
-		List<CustomerEntity> data = null; 
+		CustomerEntity data = null; 
 
 		try {
 
-			data = customerService.save(customers);
-			String msg = "It Save " + data.size() + " customers.";
+			data = customerService.save(customer);
+			String msg = "It save customer " + data.getId() + ".";
 			
 			response.setMessage(msg);
 			response.setSuccess(true);
@@ -108,21 +109,21 @@ public class CustomerController {
 	
 	/**
 	 * 
-	 * @param customers
+	 * @param customer
 	 * @return
 	 */
-	@ApiOperation(value = "Update customers", response = ResponseEntity.class)
+	@ApiOperation(value = "Update customer", response = ResponseEntity.class)
 	@PutMapping
-	public ResponseEntity<GeneralResponse<List<CustomerEntity>>> update(@RequestBody List<CustomerEntity> customers) {
+	public ResponseEntity<GeneralResponse<CustomerEntity>> update(@RequestBody CustomerEntity customer) {
 		
-		GeneralResponse<List<CustomerEntity>> response = new GeneralResponse<>();
+		GeneralResponse<CustomerEntity> response = new GeneralResponse<>();
 		HttpStatus status = null;
-		List<CustomerEntity> data = null; 
+		CustomerEntity data = null; 
 
 		try {
 
-			data = customerService.save(customers);
-			String msg = "It update " + data.size() + " customers.";
+			data = customerService.save(customer);
+			String msg = "It update customer " + data.getId() + ".";
 			
 			response.setMessage(msg);
 			response.setSuccess(true);
@@ -149,20 +150,20 @@ public class CustomerController {
 	 * @return
 	 */
 	@ApiOperation(value = "Delete customer.", response = ResponseEntity.class)
-	@DeleteMapping
-	public ResponseEntity<GeneralResponse<CustomerEntity>> delete(@RequestBody CustomerEntity customer) {
+	@DeleteMapping("/{id}")
+	public ResponseEntity<GeneralResponse<Integer>> delete(@PathVariable Integer id) {
 		
-		GeneralResponse<CustomerEntity> response = new GeneralResponse<>();
+		GeneralResponse<Integer> response = new GeneralResponse<>();
 		HttpStatus status = null;
 
 		try {
 
-			customerService.delete(customer);
-			String msg = "Customer deleted by Id " + customer.getId() + ".";
+			customerService.delete(id);
+			String msg = "Customer deleted by Id " + id + ".";
 			
 			response.setMessage(msg);
 			response.setSuccess(true);
-			response.setData(customer);
+			response.setData(id);
 			status = HttpStatus.OK;
 			
 		} catch (Exception e) {

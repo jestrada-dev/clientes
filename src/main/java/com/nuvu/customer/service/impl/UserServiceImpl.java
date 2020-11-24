@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public boolean delete(UserEntity user) throws Exception {
-		userRepository.deleteById(user.getUserName());
+	public boolean delete(String userName) throws Exception {
+		userRepository.deleteById(userName);
 		return true;
 	}
 

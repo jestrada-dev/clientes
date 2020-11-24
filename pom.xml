@@ -12,7 +12,7 @@
 	<artifactId>Customer</artifactId>
 	<version>0.0.1</version>
 	<packaging>war</packaging>
-	<name>customers</name>
+	<name>customer</name>
 	<description>Web Services REST for customer</description>
 
 	<properties>

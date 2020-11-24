@@ -21,14 +21,14 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<CustomerEntity> save(List<CustomerEntity> customers) throws Exception {
-		return customerRepository.saveAll(customers);
+	public CustomerEntity save(CustomerEntity customer) throws Exception {
+		return customerRepository.save(customer);
 	}
 
 	@Override
-	public boolean delete(CustomerEntity customer) throws Exception {
-		customerRepository.delete(customer);
-		return false;
+	public boolean delete(Integer id) throws Exception {
+		customerRepository.deleteById(id);
+		return true;
 	}
 	
 
